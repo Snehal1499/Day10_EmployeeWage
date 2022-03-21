@@ -2,32 +2,40 @@
 
 namespace EmployeeWageProblem
 {
-    public class UC1_EmployeeWage
+    public class UC2_EmployeeWage
     {
         ///Constants
-        public int Is_Full_Time = 1;
+        public int is_Present = 1;
+        public int emp_Rate_Per_Hr = 20;
+
+        ///variables
+        public int empHrs = 0;
+        public int empWage = 0;
+
     }
     public class Program
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Welcome to Employee Wage Problem");
-            ///Computation
+            UC2_EmployeeWage uc2 = new UC2_EmployeeWage();
             Random random = new Random();
-            int empcheck = random.Next(0, 2);
-            UC1_EmployeeWage emp = new UC1_EmployeeWage();
 
-            if (empcheck == emp.Is_Full_Time)
+            ///Computation
+            int empCheck = random.Next(0, 2);
+            if (empCheck == uc2.is_Present)
             {
-                Console.WriteLine("employee is Present");
+                uc2.empHrs = 8;
             }
             else
             {
-                Console.WriteLine("employee is Absent");
+                uc2.empHrs = 0;
             }
+            uc2.empWage = uc2.empHrs * uc2.emp_Rate_Per_Hr;
+            Console.WriteLine("Emp Wage =" + uc2.empWage);
         }
     }
 }
+
 
 
 
