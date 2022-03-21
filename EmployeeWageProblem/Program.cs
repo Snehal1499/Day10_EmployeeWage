@@ -1,56 +1,66 @@
 ﻿using System;
 
-namespace UC8_EmployeeWageProblem
+namespace UC9_EmployeeWageProblem
 {
-    public class Program
+    public class EmployeeWageBuilderObject
     {
-        ///Constants
-        public const int is_Part_Time = 1;
-        public const int is_Full_Time = 2;
+        public const int is_Part_Time = 1, is_Full_Time = 2;
+        public string company;
+        public int emp_Rate_Per_Hr, no_Of_Working_Days, max_Hours_Per_Month, total_Emp_Wage;
 
-        public static int companyEmpWage(string companyName, int empRatePerHr, int noOfWorkingDays, int maxHrsPerMonth)
+        public EmployeeWageBuilderObject (string company, int emp_Rate_Per_Hr, int no_Of_Working_DAys, int max_Hours_Per_Month)
         {
-            int totalEmpHrs = 0, totalWorkingDays = 0;
-            while (totalEmpHrs < maxHrsPerMonth && totalWorkingDays < noOfWorkingDays)
+            this.company = company;
+            this.emp_Rate_Per_Hr = emp_Rate_Per_Hr;
+            this.no_Of_Working_Days = no_Of_Working_DAys;
+            this.max_Hours_Per_Month = max_Hours_Per_Month;
+        }
+        public void computeEmpWage()
+        {
+            //variables
+            int empHrs = 0, totalEmpHrs = 0, totalWorkingDays = 0;
+            //Computation
+            while (totalEmpHrs <= this.max_Hours_Per_Month && totalEmpHrs < this.no_Of_Working_Days)
             {
-                int empHrs = 0;
                 totalWorkingDays++;
                 Random random = new Random();
                 int empCheck = random.Next(0, 3);
-
                 switch (empCheck)
                 {
-                    case 1:
+                    case is_Part_Time:
                         empHrs = 4;
                         break;
-                    case 2:
+                    case is_Full_Time:
                         empHrs = 8;
                         break;
                     default:
                         empHrs = 0;
                         break;
-
                 }
-                totalEmpHrs = empHrs + totalEmpHrs;
-               
-            }
-            int totalEmpWage = totalEmpHrs * empRatePerHr;
-            Console.WriteLine("totalEmpWage = " + totalEmpWage);
-            Console.WriteLine("totalEmpWage of " + companyName + " is " + totalEmpWage);
-            return totalEmpWage;
-        }
-        static void Main(string[] args)
-        {
-            companyEmpWage("Dmart", 20, 2, 10);
-            companyEmpWage("Reliance", 10, 4, 20);
+                totalEmpHrs += empHrs;
+                Console.WriteLine("DAy# =" + totalWorkingDays + "Emp Hrs =" + empHrs);
 
+            }
+            total_Emp_Wage = totalEmpHrs * this.emp_Rate_Per_Hr;
+            Console.WriteLine("Total Emp Wage For Comapny =" + company + " is " + total_Emp_Wage);
+
+
+        }
+        public string ToString()
+        {
+            return "Total Emp Wage For Company " + company + " is " + total_Emp_Wage;
+        }
+    }
+    public class Program
+    {
+        public static void Main(string[] args)
+        {
+            EmployeeWageBuilderObject dmart = new EmployeeWageBuilderObject("Dmart", 20, 2, 10);
+            EmployeeWageBuilderObject reliance = new EmployeeWageBuilderObject("Reliance", 10, 4, 20);
+            dmart.computeEmpWage();
+            Console.WriteLine(dmart.ToString());
+            reliance.computeEmpWage();
+            Console.WriteLine(reliance.ToString());
         }
     }
 }
-
-
-
-
-
-
-
