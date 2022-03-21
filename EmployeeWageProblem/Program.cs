@@ -1,36 +1,73 @@
 ﻿using System;
 
-namespace UC9_EmployeeWageProblem
+namespace UC10_EmployeeWageProblem
 {
-    public class EmployeeWageBuilderObject
+    public class CompanyEmpWage
     {
-        public const int is_Part_Time = 1, is_Full_Time = 2;
         public string company;
-        public int emp_Rate_Per_Hr, no_Of_Working_Days, max_Hours_Per_Month, total_Emp_Wage;
+        public int emp_Rate_Per_Hr, no_Of_Working_Days, max_Hrs_Per_Month, total_Emp_Wage;
 
-        public EmployeeWageBuilderObject (string company, int emp_Rate_Per_Hr, int no_Of_Working_DAys, int max_Hours_Per_Month)
+        public CompanyEmpWage(string company, int emp_Rate_Per_Hr, int no_Of_Working_Days, int max_Hrs_Per_Month)
         {
             this.company = company;
             this.emp_Rate_Per_Hr = emp_Rate_Per_Hr;
-            this.no_Of_Working_Days = no_Of_Working_DAys;
-            this.max_Hours_Per_Month = max_Hours_Per_Month;
+            this.no_Of_Working_Days = no_Of_Working_Days;
+            this.max_Hrs_Per_Month = max_Hrs_Per_Month;
+        }
+
+        public void setTotalEmpWage(int total_Emp_Wage)
+        {
+            this.total_Emp_Wage = total_Emp_Wage;
+        }
+
+        public string ToString()
+        {
+            return "Total Emp Wage For Company " + this.company + " is " + this.total_Emp_Wage;
+        }
+    }
+
+    public class EmpWageBuilderArray
+    {
+        public const int is_Part_Time = 1, is_Full_Time = 2;
+        private int no_Of_Company = 0;
+        private CompanyEmpWage[] companyEmpWageArray;
+
+        public EmpWageBuilderArray()
+        {
+            this.companyEmpWageArray = new CompanyEmpWage[5];
+        }
+
+        public void addCompanyEmpWage(string company, int emp_Rate_Per_Hr, int no_Of_Working_Days, int max_Hrs_Per_Month)
+        {
+            companyEmpWageArray[this.no_Of_Company] = new CompanyEmpWage(company, emp_Rate_Per_Hr, no_Of_Working_Days, max_Hrs_Per_Month);
+            no_Of_Company++;
         }
         public void computeEmpWage()
         {
-            //variables
+            for (int i = 0; i < no_Of_Company; i++)
+            {
+                companyEmpWageArray[i].setTotalEmpWage(this.computeEmpWage(this.companyEmpWageArray[i]));
+                Console.WriteLine(this.companyEmpWageArray[i].ToString());
+            }
+        }
+
+        public int computeEmpWage(CompanyEmpWage companyEmpWage)
+        {
+            ///variables
             int empHrs = 0, totalEmpHrs = 0, totalWorkingDays = 0;
-            //Computation
-            while (totalEmpHrs <= this.max_Hours_Per_Month && totalEmpHrs < this.no_Of_Working_Days)
+            ///Computation
+            while (totalEmpHrs <= companyEmpWage.max_Hrs_Per_Month && totalWorkingDays < companyEmpWage.no_Of_Working_Days)
             {
                 totalWorkingDays++;
                 Random random = new Random();
                 int empCheck = random.Next(0, 3);
+
                 switch (empCheck)
                 {
-                    case is_Part_Time:
+                    case 1:
                         empHrs = 4;
                         break;
-                    case is_Full_Time:
+                    case 2:
                         empHrs = 8;
                         break;
                     default:
@@ -38,29 +75,20 @@ namespace UC9_EmployeeWageProblem
                         break;
                 }
                 totalEmpHrs += empHrs;
-                Console.WriteLine("DAy# =" + totalWorkingDays + "Emp Hrs =" + empHrs);
-
+                Console.WriteLine("Days# = " + totalWorkingDays + " is " + empHrs);
             }
-            total_Emp_Wage = totalEmpHrs * this.emp_Rate_Per_Hr;
-            Console.WriteLine("Total Emp Wage For Comapny =" + company + " is " + total_Emp_Wage);
-
-
-        }
-        public string ToString()
-        {
-            return "Total Emp Wage For Company " + company + " is " + total_Emp_Wage;
+            return totalEmpHrs * companyEmpWage.emp_Rate_Per_Hr;
         }
     }
-    public class Program
+
+    public class program
     {
         public static void Main(string[] args)
         {
-            EmployeeWageBuilderObject dmart = new EmployeeWageBuilderObject("Dmart", 20, 2, 10);
-            EmployeeWageBuilderObject reliance = new EmployeeWageBuilderObject("Reliance", 10, 4, 20);
-            dmart.computeEmpWage();
-            Console.WriteLine(dmart.ToString());
-            reliance.computeEmpWage();
-            Console.WriteLine(reliance.ToString());
+            EmpWageBuilderArray empWageBuilderArray = new EmpWageBuilderArray();
+            empWageBuilderArray.addCompanyEmpWage("Dmart", 20, 2, 10);
+            empWageBuilderArray.addCompanyEmpWage("Reliance", 10, 4, 20);
+            empWageBuilderArray.computeEmpWage();
         }
     }
 }
