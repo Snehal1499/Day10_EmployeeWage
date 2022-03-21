@@ -2,14 +2,14 @@
 
 namespace EmployeeWageProblem
 {
-    public class UC3_EmployeeWage
+    public class UC4_EmployeeWage
     {
         ///Constants
-        public int is_PartTime = 1;
-        public int is_FullTime = 2;
+        public int is_FullTime = 1;
+        public int is_PartTime = 2;
         public int emp_Rate_Per_Hr = 20;
 
-        ///variables
+        ///Variables
         public int empHrs = 0;
         public int empWage = 0;
     }
@@ -17,25 +17,26 @@ namespace EmployeeWageProblem
     {
         public static void Main(string[] args)
         {
-            UC3_EmployeeWage uc3 = new UC3_EmployeeWage();
+            UC4_EmployeeWage uc4 = new UC4_EmployeeWage();
             Random random = new Random();
+
+            ///Computation
             int empCheck = random.Next(0, 3);
 
-            //Computation
-            if (empCheck == uc3.is_FullTime)
+            switch (empCheck)
             {
-                uc3.empHrs = 8;
+                case 1:
+                    uc4.empHrs = 8;
+                    break;
+                case 2:
+                    uc4.empHrs = 4;
+                    break;
+                default:
+                    uc4.empHrs = 0;
+                    break;
             }
-            else if (empCheck == uc3.is_PartTime)
-            {
-                uc3.empHrs = 4;
-            }
-            else
-            {
-                uc3.empHrs = 0;
-            }
-            uc3.empWage = uc3.empHrs * uc3.emp_Rate_Per_Hr;
-            Console.WriteLine("Wage= " + uc3.empWage);
+            uc4.empWage = uc4.empHrs * uc4.emp_Rate_Per_Hr;
+            Console.WriteLine("Emp Wage =" + uc4.empWage);
         }
     }
 }
