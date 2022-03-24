@@ -1,6 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 
-namespace UC12_EmployeeWage
+namespace UseCase_13_Employee_Wage
 {
     public interface IComputeEmpWage
     {
@@ -113,3 +114,5 @@ namespace UC12_EmployeeWage
         }
     }
 }
+
+
