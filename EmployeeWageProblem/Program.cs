@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace UseCase_13_Employee_Wage
+namespace UC14_EmployeeWage
 {
     public interface IComputeEmpWage
     {
